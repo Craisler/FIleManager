@@ -8,7 +8,7 @@ public class FileManager {
     private static final Scanner SCANNER = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
-        String startPath = args.length > 0 ? args[0] : ".";
+        String startPath = ".";
         String currentLocation = new File(startPath).getCanonicalPath();
         String command[] = getCommand(currentLocation);
         while (command[0] != "exit") {
@@ -20,14 +20,22 @@ public class FileManager {
 
                 //mkdir [name] – создание новой директории с указанным именем
                 case "mkdir" -> {
-                    String directoryName = command[1];
-                    System.out.println(Command.mkdirCommand(currentLocation, directoryName));
+                    if (command.length > 1 && command[1] != null && !command[1].isEmpty()) {
+                        String directoryName = command[1];
+                        System.out.println(Command.mkdirCommand(currentLocation, directoryName));
+                    } else {
+                        System.out.println("Введите название папки для создания");
+                    }
                     break;
                 }
 
                 case "cd" -> {
-                    String path = command[1];
-                    currentLocation = Command.cdCommand(currentLocation, path);
+                    if (command.length > 1 && command[1] != null && !command[1].isEmpty()) {
+                        String path = command[1];
+                        currentLocation = Command.cdCommand(currentLocation, path);
+                    } else {
+                        System.out.println("Введите название папки для перехода");
+                    }
                     break;
                 }
 
@@ -39,7 +47,6 @@ public class FileManager {
                             case "-l" -> {
                                 Command.lslCommand(currentLocation);
                                 break;
-                                //TO DO дописать метод в расширенной инфой
                             }
                             default -> {
                                 System.out.println("Введён неизвестный ключ");
@@ -102,6 +109,7 @@ public class FileManager {
             command = getCommand(currentLocation);
         }
     }
+
     public static String[] getCommand(String currentLocation) {
         return SCANNER.nextLine().split(" ");
     }

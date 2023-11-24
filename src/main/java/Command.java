@@ -27,7 +27,7 @@ public class Command {
                     if (file.isDirectory()) {
                         getFiles(file, fileList, fileName);
                     } else {
-                        if (file.getName().toLowerCase().endsWith(fileName)) {
+                        if (file.getName().toLowerCase().endsWith(fileName.toLowerCase())) {
                             fileList.add(file);
                         }
                     }
